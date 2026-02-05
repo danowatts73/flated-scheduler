@@ -99,8 +99,7 @@ export async function POST(request) {
                     { name: name, email: email, rsvp: true, partstat: 'ACCEPTED', role: 'REQ-PARTICIPANT' },
                     { name: 'Flated Info', email: 'info@flated.com', rsvp: true, partstat: 'ACCEPTED', role: 'REQ-PARTICIPANT' },
                     { name: 'Joe', email: 'joe@flated.com', rsvp: true, partstat: 'ACCEPTED', role: 'OPT-PARTICIPANT' },
-                    { name: 'Hannah', email: 'hannah@flated.com', rsvp: true, partstat: 'ACCEPTED', role: 'OPT-PARTICIPANT' },
-                    { name: 'Dan', email: 'dan@flated.com', rsvp: true, partstat: 'ACCEPTED', role: 'OPT-PARTICIPANT' }
+                    { name: 'Hannah', email: 'hannah@flated.com', rsvp: true, partstat: 'ACCEPTED', role: 'OPT-PARTICIPANT' }
                 ]
             };
 
