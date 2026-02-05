@@ -43,13 +43,57 @@ const saveBooking = async (newBooking) => {
     }
 };
 
+// Helper to save blackout dates
+const saveBlackoutDate = async (date, isBlackout) => {
+    try {
+        const key = 'admin:blackout_dates';
+        if (isBlackout) {
+            await kv.sadd(key, date);
+        } else {
+            await kv.srem(key, date);
+        }
+        console.log(`Updated blackout status for ${date}: ${isBlackout}`);
+    } catch (error) {
+        console.error('Failed to update blackout date:', error);
+        throw error;
+    }
+};
+
+// Helper to check if date is blackout
+const isBlackoutDate = async (date) => {
+    try {
+        return await kv.sismember('admin:blackout_dates', date);
+    } catch (error) {
+        return false;
+    }
+};
+
 export async function GET(request) {
     try {
         const { searchParams } = new URL(request.url);
         const date = searchParams.get('date');
+        const type = searchParams.get('type'); // 'availability' or 'blackout_list'
+
+        if (type === 'blackout_list') {
+            const blackoutDates = await kv.smembers('admin:blackout_dates');
+            return NextResponse.json({ blackoutDates: blackoutDates || [] });
+        }
 
         if (!date) {
             return NextResponse.json({ error: 'Date is required' }, { status: 400 });
+        }
+
+        // Check if the entire day is blacked out
+        const isBlackedOut = await isBlackoutDate(date);
+        if (isBlackedOut) {
+            // Return all slots as booked to hide them
+            return NextResponse.json({
+                bookedTimes: [
+                    "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
+                    "13:00", "13:30", "14:00", "14:30",
+                    "15:00", "15:30", "16:00", "16:30"
+                ]
+            });
         }
 
         const dateKey = `bookings:${date}`;
@@ -77,7 +121,21 @@ export async function GET(request) {
 export async function POST(request) {
     try {
         const body = await request.json();
-        const { name, email, phone, date, time } = body;
+        const { action, date, isBlackout, adminPassword } = body;
+
+        // Admin Action: Toggle Blackout Date
+        if (action === 'toggle_blackout') {
+            if (adminPassword !== process.env.ADMIN_PASSWORD) {
+                return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+            }
+            if (!date) {
+                return NextResponse.json({ error: 'Date required' }, { status: 400 });
+            }
+            await saveBlackoutDate(date, isBlackout);
+            return NextResponse.json({ success: true });
+        }
+
+        const { name, email, phone, time } = body;
 
         // Backend Validation
         // 0. Ensure all fields are present to prevent crashes (Internal Errors)

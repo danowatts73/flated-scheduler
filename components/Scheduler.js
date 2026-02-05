@@ -100,6 +100,11 @@ export default function Scheduler() {
             return;
         }
 
+        if (bookedSlots.length >= allTimeSlots.length) {
+            setStatus({ type: 'error', message: 'This date is currently unavailable for scheduling. Please select another day.' });
+            return;
+        }
+
         if (!validateTime(formData.date, formData.time)) {
             setStatus({ type: 'error', message: 'Please select a time between 9:00 AM and 5:00 PM MST.' });
             return;
