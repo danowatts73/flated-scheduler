@@ -3,7 +3,7 @@ import "./globals.css";
 const maven = Maven_Pro({ subsets: ["latin"] });
 
 export const metadata = {
-    title: "Schedule a Call - FLATED",
+    title: "TALK TO A FLATED HUMAN - FLATED",
     description: "Schedule a call with the FLATED team.",
 };
 

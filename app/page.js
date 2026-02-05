@@ -5,7 +5,7 @@ export default function Home() {
         <div className="section">
             <div className="container">
                 <div style={{ textAlign: 'center', marginBottom: '60px' }}>
-                    <h1 style={{ fontSize: '3rem', marginBottom: '20px' }}>Schedule a Call</h1>
+                    <h1 style={{ fontSize: '3rem', marginBottom: '20px' }}>TALK TO A FLATED HUMAN</h1>
                     <p style={{ fontSize: '1.2rem', color: '#666', maxWidth: '600px', margin: '0 auto' }}>
                         Available Monday to Friday, 9:00 AM - 5:00 PM Mountain Standard Time.
                     </p>
