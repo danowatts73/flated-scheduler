@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function Scheduler() {
     const [formData, setFormData] = useState({
@@ -12,6 +12,34 @@ export default function Scheduler() {
     });
     const [status, setStatus] = useState({ type: '', message: '' });
     const [loading, setLoading] = useState(false);
+    const [bookedSlots, setBookedSlots] = useState([]);
+
+    // All available time slots (MST)
+    const allTimeSlots = [
+        "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
+        "13:00", "13:30", "14:00", "14:30",
+        "15:00", "15:30", "16:00", "16:30"
+    ];
+
+    // Fetch availability when date changes
+    useEffect(() => {
+        if (formData.date) {
+            const fetchAvailability = async () => {
+                try {
+                    const res = await fetch(`/api/schedule?date=${formData.date}`);
+                    if (res.ok) {
+                        const data = await res.json();
+                        setBookedSlots(data.bookedTimes || []);
+                    }
+                } catch (error) {
+                    console.error('Failed to fetch availability:', error);
+                }
+            };
+            fetchAvailability();
+        } else {
+            setBookedSlots([]);
+        }
+    }, [formData.date]);
 
     const handleChange = (e) => {
         setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -171,20 +199,21 @@ export default function Scheduler() {
                                     style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
                                 >
                                     <option value="">Select a time</option>
-                                    <option value="09:00">9:00 AM</option>
-                                    <option value="09:30">9:30 AM</option>
-                                    <option value="10:00">10:00 AM</option>
-                                    <option value="10:30">10:30 AM</option>
-                                    <option value="11:00">11:00 AM</option>
-                                    <option value="11:30">11:30 AM</option>
-                                    <option value="13:00">1:00 PM</option>
-                                    <option value="13:30">1:30 PM</option>
-                                    <option value="14:00">2:00 PM</option>
-                                    <option value="14:30">2:30 PM</option>
-                                    <option value="15:00">3:00 PM</option>
-                                    <option value="15:30">3:30 PM</option>
-                                    <option value="16:00">4:00 PM</option>
-                                    <option value="16:30">4:30 PM</option>
+                                    {allTimeSlots.map(timeSlot => {
+                                        const isBooked = bookedSlots.includes(timeSlot);
+                                        const [h, m] = timeSlot.split(':').map(Number);
+                                        const period = h >= 12 ? 'PM' : 'AM';
+                                        const displayH = h % 12 || 12;
+                                        const label = `${displayH}:${m.toString().padStart(2, '0')} ${period}`;
+
+                                        if (isBooked) return null;
+
+                                        return (
+                                            <option key={timeSlot} value={timeSlot}>
+                                                {label}
+                                            </option>
+                                        );
+                                    })}
                                 </select>
                             </div>
                         </div>

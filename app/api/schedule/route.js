@@ -4,6 +4,7 @@ import fs from 'fs';
 import path from 'path';
 import nodemailer from 'nodemailer';
 import * as ics from 'ics';
+import { kv } from '@vercel/kv';
 
 const DATA_FILE = path.join(process.cwd(), 'data', 'bookings.json');
 
@@ -21,11 +22,54 @@ const getBookings = () => {
 };
 
 // Helper to save bookings
-const saveBooking = (newBooking) => {
-    const bookings = getBookings();
-    bookings.push(newBooking);
-    fs.writeFileSync(DATA_FILE, JSON.stringify(bookings, null, 2));
+const saveBooking = async (newBooking) => {
+    // 1. File storage (Local fallback)
+    try {
+        const bookings = getBookings();
+        bookings.push(newBooking);
+        fs.writeFileSync(DATA_FILE, JSON.stringify(bookings, null, 2));
+    } catch (fsError) {
+        console.error('File storage failed (likely on Vercel):', fsError.message);
+    }
+
+    // 2. Vercel KV (Persistent storage)
+    try {
+        const dateKey = `bookings:${newBooking.date}`;
+        // Store as a list of bookings for that day
+        await kv.lpush(dateKey, JSON.stringify(newBooking));
+        console.log(`Saved booking to KV for date: ${newBooking.date}`);
+    } catch (kvError) {
+        console.error('Vercel KV storage failed:', kvError.message);
+    }
 };
+
+export async function GET(request) {
+    try {
+        const { searchParams } = new URL(request.url);
+        const date = searchParams.get('date');
+
+        if (!date) {
+            return NextResponse.json({ error: 'Date is required' }, { status: 400 });
+        }
+
+        const dateKey = `bookings:${date}`;
+        const bookings = await kv.lrange(dateKey, 0, -1);
+
+        // Return only the times that are booked
+        const bookedTimes = bookings.map(b => {
+            try {
+                return JSON.parse(b).time;
+            } catch (e) {
+                return null;
+            }
+        }).filter(Boolean);
+
+        return NextResponse.json({ bookedTimes });
+    } catch (error) {
+        console.error('Availability check error:', error);
+        return NextResponse.json({ error: 'Failed to fetch availability' }, { status: 500 });
+    }
+}
 
 export async function POST(request) {
     try {
@@ -77,12 +121,7 @@ export async function POST(request) {
         }
 
         // Save valid booking (Safe storage)
-        try {
-            saveBooking({ name, email, phone, date, time, createdAt: new Date().toISOString() });
-        } catch (storageError) {
-            console.error('Safe Storage Error (likely read-only filesystem):', storageError);
-            // Non-blocking: We still want to send the email/calendar invite even if local storage fails
-        }
+        await saveBooking({ name, email, phone, date, time, createdAt: new Date().toISOString() });
 
         // --- Email & Calendar Invite Integration ---
         try {
