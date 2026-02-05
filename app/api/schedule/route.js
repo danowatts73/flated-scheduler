@@ -124,7 +124,7 @@ export async function POST(request) {
 
                     const mailOptions = {
                         from: `"Flated Scheduler" <${process.env.EMAIL_USER}>`,
-                        to: `${email}, info@flated.com, joe@flated.com, hannah@flated.com, dan@flated.com`, // Send to customer + internal team
+                        to: `${email}, info@flated.com, joe@flated.com, hannah@flated.com`, // Send to customer + internal team
                         subject: 'Call Scheduled - Flated',
                         text: `Hello ${name},\n\nYour call has been scheduled for ${date} at ${time} MST.\n\nPlease find the calendar invite attached.\n\nBest,\nFlated Team`,
                         attachments: [
