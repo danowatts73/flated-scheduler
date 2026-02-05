@@ -57,9 +57,12 @@ export async function GET(request) {
 
         // Return only the times that are booked
         const bookedTimes = bookings.map(b => {
+            if (typeof b === 'object' && b !== null) return b.time;
             try {
-                return JSON.parse(b).time;
+                const parsed = typeof b === 'string' ? JSON.parse(b) : b;
+                return parsed.time;
             } catch (e) {
+                console.error('Error parsing booking from KV:', e.message, b);
                 return null;
             }
         }).filter(Boolean);

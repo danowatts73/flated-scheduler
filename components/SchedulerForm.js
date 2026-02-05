@@ -12,12 +12,32 @@ export default function SchedulerForm() {
         reason: ''
     });
     const [status, setStatus] = useState('idle'); // idle, submitting, success, error
+    const [bookedSlots, setBookedSlots] = useState([]);
 
     const timeSlots = [
         "09:00", "09:30", "10:00", "10:30", "11:00", "11:30",
         "13:00", "13:30", "14:00", "14:30",
-        "15:00", "15:30", "16:00", "16:30", "17:00"
+        "15:00", "15:30", "16:00", "16:30"
     ];
+
+    useEffect(() => {
+        if (formData.date) {
+            const fetchAvailability = async () => {
+                try {
+                    const res = await fetch(`/api/schedule?date=${formData.date}`);
+                    if (res.ok) {
+                        const data = await res.json();
+                        setBookedSlots(data.bookedTimes || []);
+                    }
+                } catch (error) {
+                    console.error('Failed to fetch availability:', error);
+                }
+            };
+            fetchAvailability();
+        } else {
+            setBookedSlots([]);
+        }
+    }, [formData.date]);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
