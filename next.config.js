@@ -10,10 +10,23 @@ const nextConfig = {
             },
             {
                 protocol: 'https',
-                hostname: 'cdn.shopify.com', // Often used by Shopify sites like Flated
+                hostname: 'cdn.shopify.com',
                 port: '',
             }
         ],
+    },
+    async headers() {
+        return [
+            {
+                source: '/(.*)',
+                headers: [
+                    {
+                        key: 'Content-Security-Policy',
+                        value: "frame-ancestors 'self' https://flated.com https://*.myshopify.com;",
+                    },
+                ],
+            },
+        ];
     },
 };
 
