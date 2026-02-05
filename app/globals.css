@@ -1,0 +1,69 @@
+:root {
+  --primary-black: #000000;
+  --primary-white: #ffffff;
+  --accent-blue: #008fbe;
+  --text-color: #ffffff; /* Default text on dark backgrounds */
+  --font-maven: 'Maven Pro', sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  padding: 0;
+  margin: 0;
+}
+
+html,
+body {
+  max-width: 100vw;
+  overflow-x: hidden;
+  font-family: var(--font-maven);
+  color: var(--primary-black);
+  background-color: var(--primary-white);
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 700;
+  margin-bottom: 1rem;
+}
+
+/* Button Styles */
+.btn-primary {
+  background-color: var(--accent-blue);
+  color: var(--primary-white);
+  padding: 12px 24px;
+  border: none;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+  display: inline-block;
+  font-size: 1rem;
+  border-radius: 4px; /* Slight rounding for modern feel */
+}
+
+.btn-primary:hover {
+  background-color: #0077a0; /* Darker shade of blue */
+}
+
+/* Layout Utilities */
+.container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+.section {
+  padding: 60px 0;
+}
+
+/* Header & Footer corrections */
+header, footer {
+  background-color: var(--primary-black);
+  color: var(--primary-white);
+}

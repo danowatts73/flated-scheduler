@@ -1,0 +1,19 @@
+{
+    "name": "flated-scheduler",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "dev": "next dev",
+        "build": "next build",
+        "start": "next start",
+        "lint": "next lint"
+    },
+    "dependencies": {
+        "googleapis": "^171.0.0",
+        "ics": "^3.8.1",
+        "next": "latest",
+        "nodemailer": "^7.0.13",
+        "react": "latest",
+        "react-dom": "latest"
+    }
+}
