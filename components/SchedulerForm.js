@@ -1,6 +1,6 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 
 export default function SchedulerForm() {
     const [formData, setFormData] = useState({
@@ -113,9 +113,17 @@ export default function SchedulerForm() {
                         onChange={(e) => setFormData({ ...formData, time: e.target.value })}
                     >
                         <option value="">Select a time</option>
-                        {timeSlots.map(t => (
-                            <option key={t} value={t}>{t} MST</option>
-                        ))}
+                        {timeSlots.map(t => {
+                            const isBooked = bookedSlots.includes(t);
+                            if (isBooked) return null;
+                            const [h, m] = t.split(':').map(Number);
+                            const period = h >= 12 ? 'PM' : 'AM';
+                            const displayH = h % 12 || 12;
+                            const label = `${displayH}:${m.toString().padStart(2, '0')} ${period}`;
+                            return (
+                                <option key={t} value={t}>{label} MST</option>
+                            );
+                        })}
                     </select>
                 </div>
             </div>
