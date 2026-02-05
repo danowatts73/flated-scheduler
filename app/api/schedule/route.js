@@ -46,6 +46,11 @@ export async function POST(request) {
             return NextResponse.json({ error: 'Please select a time between 9:00 AM and 5:00 PM Mountain Time.' }, { status: 400 });
         }
 
+        // 1.1 Reject Lunch Hour (12:00 - 1:00 PM)
+        if (time === "12:00" || time === "12:30") {
+            return NextResponse.json({ error: 'The 12:00 PM - 1:00 PM lunch hour is not available for scheduling.' }, { status: 400 });
+        }
+
         const dateObj = new Date(date);
         const dayOfWeek = dateObj.getUTCDay(); // UTC day matches date string YYYY-MM-DD
 
