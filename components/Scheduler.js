@@ -179,8 +179,8 @@ export default function Scheduler() {
                             />
                         </div>
 
-                        <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
-                            <div style={{ flex: '1 1 200px', minWidth: '0' }}>
+                        <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap', width: '100%', overflow: 'hidden' }}>
+                            <div style={{ flex: '1 1 200px', minWidth: '0', maxWidth: '100%', boxSizing: 'border-box' }}>
                                 <label htmlFor="date" style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>Date</label>
                                 <input
                                     type="date"
@@ -190,10 +190,10 @@ export default function Scheduler() {
                                     value={formData.date}
                                     onChange={handleChange}
                                     min={new Date().toISOString().split('T')[0]}
-                                    style={{ width: '100%', padding: '12px', borderRadius: '4px', border: '1px solid #ccc', boxSizing: 'border-box', fontSize: '16px' }}
+                                    style={{ width: '100%', maxWidth: '100%', padding: '12px', borderRadius: '4px', border: '1px solid #ccc', boxSizing: 'border-box', fontSize: '16px' }}
                                 />
                             </div>
-                            <div style={{ flex: '1 1 200px', minWidth: '0' }}>
+                            <div style={{ flex: '1 1 200px', minWidth: '0', maxWidth: '100%', boxSizing: 'border-box' }}>
                                 <label htmlFor="time" style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>Time (MST)</label>
                                 <select
                                     id="time"
