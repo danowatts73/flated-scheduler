@@ -58,8 +58,20 @@ h1, h2, h3, h4, h5, h6 {
   padding: 0 20px;
 }
 
+@media (max-width: 768px) {
+  .container {
+    padding: 0 10px;
+  }
+}
+
 .section {
   padding: 60px 0;
+}
+
+@media (max-width: 768px) {
+  .section {
+    padding: 30px 0;
+  }
 }
 
 /* Header & Footer corrections */

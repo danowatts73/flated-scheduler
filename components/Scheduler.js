@@ -135,10 +135,10 @@ export default function Scheduler() {
     };
 
     return (
-        <section className="section">
-            <div className="container" style={{ maxWidth: '600px' }}>
-                <h2 style={{ textAlign: 'center', marginBottom: '2rem' }}>Schedule a Call</h2>
-                <div style={{ padding: '30px', borderRadius: '8px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
+        <section className="section" style={{ padding: '20px 10px' }}>
+            <div className="container" style={{ maxWidth: '600px', width: '100%', padding: '0 15px' }}>
+                <h2 style={{ textAlign: 'center', marginBottom: '2rem', fontSize: 'clamp(1.5rem, 5vw, 2rem)' }}>Schedule a Call</h2>
+                <div style={{ padding: 'clamp(15px, 4vw, 30px)', borderRadius: '8px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
                     <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                         <div>
                             <label htmlFor="name" style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>Name</label>
