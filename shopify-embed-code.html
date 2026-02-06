@@ -1,0 +1,71 @@
+<!-- FLATED Scheduler - Responsive Embed Code for Shopify -->
+<!-- Paste this code into your Shopify page: flated.com/pages/schedule-a-call -->
+<!-- Make sure to use the "Show HTML" button in the Shopify editor -->
+
+<style>
+  /* Remove any default Shopify padding/margins that might constrain width */
+  body,
+  .main-content,
+  .page-width {
+    padding-left: 0 !important;
+    padding-right: 0 !important;
+  }
+
+  /* Container for the iframe */
+  .scheduler-container {
+    position: relative;
+    width: 100%;
+    max-width: 100%;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+
+  /* Responsive iframe */
+  .scheduler-iframe {
+    width: 100%;
+    border: none;
+    overflow: hidden;
+    display: block;
+  }
+
+  /* Desktop: fixed height */
+  @media (min-width: 768px) {
+    .scheduler-iframe {
+      height: 900px;
+    }
+  }
+
+  /* Mobile: adjusted height for better fit */
+  @media (max-width: 767px) {
+    .scheduler-iframe {
+      height: 1000px;
+      min-height: 100vh;
+    }
+  }
+
+  /* Extra small screens */
+  @media (max-width: 480px) {
+    .scheduler-iframe {
+      height: 1050px;
+    }
+  }
+</style>
+
+<div class="scheduler-container">
+  <iframe src="https://flated-scheduler.vercel.app" class="scheduler-iframe" title="Schedule a Call with FLATED"
+    loading="lazy" allowtransparency="true"></iframe>
+</div>
+
+<!-- Optional: Loading indicator while iframe loads -->
+<script>
+  // Add a simple loading state (optional)
+  document.addEventListener('DOMContentLoaded', function () {
+    const iframe = document.querySelector('.scheduler-iframe');
+    if (iframe) {
+      iframe.addEventListener('load', function () {
+        console.log('Scheduler loaded successfully');
+      });
+    }
+  });
+</script>

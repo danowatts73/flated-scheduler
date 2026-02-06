@@ -135,10 +135,10 @@ export default function Scheduler() {
     };
 
     return (
-        <section className="section" style={{ padding: '20px 10px' }}>
-            <div className="container" style={{ maxWidth: '600px', width: '100%', padding: '0 15px' }}>
+        <section className="section" style={{ padding: '20px 0' }}>
+            <div className="container" style={{ maxWidth: '600px', width: '100%', padding: '0 20px', boxSizing: 'border-box' }}>
                 <h2 style={{ textAlign: 'center', marginBottom: '2rem', fontSize: 'clamp(1.5rem, 5vw, 2rem)' }}>Schedule a Call</h2>
-                <div style={{ padding: 'clamp(15px, 4vw, 30px)', borderRadius: '8px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
+                <div style={{ padding: 'clamp(20px, 5vw, 30px)', borderRadius: '8px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
                     <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                         <div>
                             <label htmlFor="name" style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>Name</label>
@@ -149,7 +149,7 @@ export default function Scheduler() {
                                 required
                                 value={formData.name}
                                 onChange={handleChange}
-                                style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
+                                style={{ width: '100%', padding: '12px', borderRadius: '4px', border: '1px solid #ccc', boxSizing: 'border-box', fontSize: '16px' }}
                             />
                         </div>
 
@@ -162,7 +162,7 @@ export default function Scheduler() {
                                 required
                                 value={formData.email}
                                 onChange={handleChange}
-                                style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
+                                style={{ width: '100%', padding: '12px', borderRadius: '4px', border: '1px solid #ccc', boxSizing: 'border-box', fontSize: '16px' }}
                             />
                         </div>
 
@@ -175,12 +175,12 @@ export default function Scheduler() {
                                 required
                                 value={formData.phone}
                                 onChange={handleChange}
-                                style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
+                                style={{ width: '100%', padding: '12px', borderRadius: '4px', border: '1px solid #ccc', boxSizing: 'border-box', fontSize: '16px' }}
                             />
                         </div>
 
-                        <div style={{ display: 'flex', gap: '20px' }}>
-                            <div style={{ flex: 1 }}>
+                        <div style={{ display: 'flex', gap: '15px', flexWrap: 'wrap' }}>
+                            <div style={{ flex: '1 1 200px', minWidth: '0' }}>
                                 <label htmlFor="date" style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>Date</label>
                                 <input
                                     type="date"
@@ -190,10 +190,10 @@ export default function Scheduler() {
                                     value={formData.date}
                                     onChange={handleChange}
                                     min={new Date().toISOString().split('T')[0]}
-                                    style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
+                                    style={{ width: '100%', padding: '12px', borderRadius: '4px', border: '1px solid #ccc', boxSizing: 'border-box', fontSize: '16px' }}
                                 />
                             </div>
-                            <div style={{ flex: 1 }}>
+                            <div style={{ flex: '1 1 200px', minWidth: '0' }}>
                                 <label htmlFor="time" style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>Time (MST)</label>
                                 <select
                                     id="time"
@@ -201,7 +201,7 @@ export default function Scheduler() {
                                     required
                                     value={formData.time}
                                     onChange={handleChange}
-                                    style={{ width: '100%', padding: '10px', borderRadius: '4px', border: '1px solid #ccc' }}
+                                    style={{ width: '100%', padding: '12px', borderRadius: '4px', border: '1px solid #ccc', boxSizing: 'border-box', fontSize: '16px' }}
                                 >
                                     <option value="">Select a time</option>
                                     {allTimeSlots.map(timeSlot => {
