@@ -138,7 +138,7 @@ export default function Scheduler() {
         <section className="section">
             <div className="container" style={{ maxWidth: '600px' }}>
                 <h2 style={{ textAlign: 'center', marginBottom: '2rem' }}>Schedule a Call</h2>
-                <div style={{ backgroundColor: '#f9f9f9', padding: '30px', borderRadius: '8px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
+                <div style={{ padding: '30px', borderRadius: '8px', boxShadow: '0 4px 12px rgba(0,0,0,0.1)' }}>
                     <form onSubmit={handleSubmit} style={{ display: 'flex', flexDirection: 'column', gap: '20px' }}>
                         <div>
                             <label htmlFor="name" style={{ display: 'block', marginBottom: '8px', fontWeight: 'bold' }}>Name</label>
